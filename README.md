@@ -6,11 +6,7 @@ The goal of this project is to build a REST API using Flask that manages user da
 
 GET → Retrieve users
 
-POST → Add new users
 
-PUT → Update existing users
-
-DELETE → Remove users
 
 🛠️ Tools & Technologies
 
