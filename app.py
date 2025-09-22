@@ -2,34 +2,21 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Sample student data
-students = [
-    {"id": 1, "name": "Shravani"},
-    {"id": 2, "name": "Anjali"}
-]
+# In-memory storage for users
+users = {}
 
-# Home route
-@app.route('/')
-def home():
-    return "🎓 Student API is Running!"
+# GET all users
+@app.route("/users", methods=["GET"])
+def get_users():
+    return jsonify(users)
 
-# GET all students
-@app.route('/students', methods=['GET'])
-def get_students():
-    return jsonify(students)
+# POST new user
+@app.route("/users", methods=["POST"])
+def add_user():
+    data = request.json
+    user_id = len(users) + 1
+    users[user_id] = data
+    return jsonify({"message": "User added", "user_id": user_id}), 201
 
-# POST a new student
-@app.route('/students', methods=['POST'])
-def add_student():
-    data = request.get_json()
-    new_student = {
-        "id": students[-1]["id"] + 1 if students else 1,
-        "name": data["name"]
-    }
-    students.append(new_student)
-    return jsonify(new_student), 201
-
-# Run the app
-if __name__== '__main__':
-    app.run(debug=True)
-   
+if __name__ == "__main__":
+    app.run(debug=True, host="127.0.0.1", port=5001)
